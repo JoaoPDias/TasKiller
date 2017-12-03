@@ -80,8 +80,8 @@ public class TarefaDAO {
             LocalDate dataInicio = rs.getDate("dataInicio").toLocalDate();
             LocalDate dataConclusao = rs.getDate("dataConclusao").toLocalDate(); 
             Status status = Status.valueOf(rs.getString("status"));
-            List<Tarefa> requisitos;
-            List<Pessoa> colaboradores;
+            List<Tarefa> requisitos = null;
+            List<Pessoa> colaboradores = null;
             tarefas.add(new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, status, requisitos, colaboradores));
             
         }
