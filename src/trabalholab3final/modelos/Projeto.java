@@ -13,6 +13,17 @@ public class Projeto {
         this.id = id;
         this.descricao = descricao;
     }
+
+    public Projeto(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Projeto(Integer id, String descricao, List<Tarefa> tarefas) {
+        this.id = id;
+        this.descricao = descricao;
+        this.tarefas = tarefas;
+    }
+    
     
     
 

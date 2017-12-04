@@ -4,25 +4,31 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import tabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Projeto;
 
 public class ProjetoDAO {
 
     Connection conexao;
-    String sqlInserir = "INSERT INTO PROJETO(descricao) VALUES (?,?);";
-    String sqlAlterar = "UPDATE PROJETO SET descricao = ? WHERE idprojeto = ?;";
-    String sqlExcluir = "DELETE FROM PROJETO WHERE idprojeto = ?";
-    String sqlListar = "SELECT * FROM PROJETO WHERE idprojeto = ?";
+    private String sqlInserir = "INSERT INTO PROJETO(descricao) VALUES (?)";
+    private String sqlAlterar = "UPDATE PROJETO SET descricao = ? WHERE idprojeto = ?";
+    private String sqlExcluir = "DELETE FROM PROJETO WHERE idprojeto = ?";
+    private String sqlListar = "SELECT * FROM PROJETO WHERE idprojeto = ?";
 
     ProjetoDAO() throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
     }
 
     public void inserir(Projeto projeto) throws SQLException {
-        PreparedStatement operacao = conexao.prepareStatement(sqlInserir);
+        PreparedStatement operacao = conexao.prepareStatement(sqlInserir,Statement.RETURN_GENERATED_KEYS);
         operacao.setString(1, projeto.getDescricao());
         operacao.execute();
+        ResultSet rs = operacao.getGeneratedKeys();
+        if (rs.next()) {
+            int ultimo = rs.getInt(1);
+            projeto.setId(ultimo);
+        }
         operacao.close();
     }
 

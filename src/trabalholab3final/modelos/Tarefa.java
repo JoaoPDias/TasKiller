@@ -42,6 +42,18 @@ public class Tarefa {
         this.requisitos = requisitos;
         this.colaboradores = colaboradores;
     }
+
+    public Tarefa(Projeto projeto, String descricao, Integer duracao, Double valorConclusao, LocalDate dataInicio, LocalDate dataConclusao, String status, List<Tarefa> requisitos, List<Pessoa> colaboradores) {
+        this.projeto = projeto;
+        this.descricao = descricao;
+        this.duracao = duracao;
+        this.valorConclusao = valorConclusao;
+        this.dataInicio = dataInicio;
+        this.dataConclusao = dataConclusao;
+        this.status = Status.valueOf(status);
+        this.requisitos = requisitos;
+        this.colaboradores = colaboradores;
+    }
     
     
 
