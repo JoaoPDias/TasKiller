@@ -27,6 +27,7 @@ public class TarefaDAO {
     private String sqlListar = "SELECT * FROM TAREFA WHERE idtarefa = ?";
     private String sqlListarProjeto = "SELECT FROM TAREFA WHERE fk_projeto = ?";
     private String sqlAlterarStatus = "UPDATE TAREFA SET STATUS = ? WHERE idtarefa = ?";
+    private String sqlListarStatus = "SELECT * FROM TAREFAS WHERE status = ?"
 
     private RequisitoDAO requisitoDAO;
     private TarefaPessoaDAO tarefapessoaDAO;
@@ -153,15 +154,45 @@ public class TarefaDAO {
             LocalDate dataInicio = rs.getDate("dataInicio").toLocalDate();
             LocalDate dataConclusao = rs.getDate("dataConclusao").toLocalDate();
             Status status = Status.valueOf(rs.getString("status"));
-            List<Tarefa> requisitos = null;
-            List<Pessoa> colaboradores = null;
+            List<Tarefa> requisitos = new ArrayList<>();
+            if (requisitoDAO.verificaRequisito(idtarefa)) {
+                requisitos.addAll(requisitoDAO.ListarTarefas(idtarefa));
+            }
+            List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(idtarefa);
             tarefas.add(new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, status, requisitos, colaboradores));
 
         }
         return tarefas;
 
     }
+    
+    public List<Tarefa> listarPorStatus(Status status) throws SQLException {
+        PreparedStatement operacao = conexao.prepareStatement(sqlListarStatus)
+        operacao.setString(1, status.toString());
+        operacao.execute();
+        ResultSet rs = operacao.getResultSet();
+        List<Tarefa> tarefas = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("idtarefa");
+            Projeto projeto = projetoDAO.listar(rs.getInt("fk_projeto"));
+            String descricao = rs.getString("descricao");
+            Integer duracao = rs.getInt("duracao");
+            Double valorConclusao = rs.getDouble("valorPercentual");
+            LocalDate dataInicio = rs.getDate("dataInicio").toLocalDate();
+            LocalDate dataConclusao = rs.getDate("dataConclusao").toLocalDate();
+            Status status = Status.valueOf(rs.getString("status"));
+            List<Tarefa> requisitos = new ArrayList<>();
+            if (requisitoDAO.verificaRequisito(idtarefa)) {
+                requisitos.addAll(requisitoDAO.ListarTarefas(idtarefa));
+            }
+            List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(idtarefa);
+            tarefas.add(new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, status, requisitos, colaboradores));
 
+        }
+        return tarefas;
+
+    }
+    
     public static void main(String[] args) {
         try {
             Projeto p = new Projeto("Projeto J");
