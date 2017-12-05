@@ -48,7 +48,7 @@ O esquema construído busca abordar os requisitos do sistema. Todas as tabelas p
 
 Um projeto possui N tarefas, sendo assim, cada registro da tarefa possuirá o campo chave estrangeira fkProjeto representando esse relacionamento. Há um autorrelacionamento de Tarefa com Requisito, já que N tarefas podem ter N tarefas como requisitos. Assim, a tabela requisito apresenta como chave primária, **a chave da Tarefa e a chave de seu requisito** e um campo boolean **Concluido** para sinalizar a conclusão do requisito. A Tarefa pode possuir N colaboradores, assim como um colaboradores pode estar em N tarefas, sendo necessária a tabela **tarefa_pessoa** para gerenciar esse relacionamento N para N entre Tarefa e Pessoa. A Pessoa possui ,como campos do registro, o nome e o e-mail. 
 
-##Modelo de Classes
+## Modelo de Classes
 
 Para modelar as classes bases do sistema foram criadas 3 classes. Projeto, Tarefa e Pessoa.
 A Classe Projeto, além do seu id, nome e e-mail apresenta uma coleção de tare
