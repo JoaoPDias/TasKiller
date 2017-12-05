@@ -52,6 +52,7 @@ public class TarefaDAO {
         } else {
             operacao.setString(7, Status.DISPONIVEL.toString());
         }
+        System.out.print(operacao);
         operacao.execute();
         ResultSet rs = operacao.getGeneratedKeys();
         if (rs.next()) {
