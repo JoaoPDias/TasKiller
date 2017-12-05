@@ -24,7 +24,7 @@ public class TarefaDAO {
     private String sqlAlterar = "UPDATE TAREFA SET fk_projeto = ?, descricao = ?, duracao = ?, valorpercentual = ?, datainicio = ?, dataconclusao = ?, status = ? WHERE idtarefa = ?";
     private String sqlExcluir = "DELETE FROM PROJETO WHERE idtarefa = ?";
     private String sqlListar = "SELECT * FROM TAREFA WHERE idtarefa = ?";
-    private String sqlListarProjeto = "SELECT FROM TAREFA WHERE fk_projeto = ?";
+    private String sqlListarProjeto = "SELECT * FROM TAREFA WHERE fk_projeto = ?";
     private String sqlAlterarStatus = "UPDATE TAREFA SET STATUS = ? WHERE idtarefa = ?";
     private String sqlListarStatus = "SELECT * FROM TAREFAS WHERE status = ?";
     private String sqlListarTodos = "SELECT¨* FROM TAREFA";
@@ -33,12 +33,14 @@ public class TarefaDAO {
     private TarefaPessoaDAO tarefapessoaDAO;
     private ProjetoDAO projetoDAO;
 
-    public TarefaDAO() throws SQLException, ClassNotFoundException {
+    public TarefaDAO(ProjetoDAO p) throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
         this.requisitoDAO = new RequisitoDAO(this);
         this.tarefapessoaDAO = new TarefaPessoaDAO();
-        this.projetoDAO = new ProjetoDAO();
+        this.projetoDAO = p;
     }
+
+
 
     public void inserir(Tarefa tarefa) throws SQLException {
         PreparedStatement operacao = conexao.prepareStatement(sqlInserir, Statement.RETURN_GENERATED_KEYS);
@@ -149,6 +151,33 @@ public class TarefaDAO {
         while (rs.next()) {
             Integer id = rs.getInt("idtarefa");
             Projeto projeto = p;
+            String descricao = rs.getString("descricao");
+            Integer duracao = rs.getInt("duracao");
+            Double valorConclusao = rs.getDouble("valorPercentual");
+            LocalDate dataInicio = rs.getDate("dataInicio").toLocalDate();
+            LocalDate dataConclusao = rs.getDate("dataConclusao").toLocalDate();
+            Status status = Status.valueOf(rs.getString("status"));
+            List<Tarefa> requisitos = new ArrayList<>();
+            if (requisitoDAO.verificaRequisito(id)) {
+                requisitos.addAll(requisitoDAO.ListarTarefas(id));
+            }
+            List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(id);
+            tarefas.add(new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, status, requisitos, colaboradores));
+
+        }
+        return tarefas;
+
+    }
+    
+       public List<Tarefa> listarPorProjeto(int idprojeto) throws SQLException {
+        PreparedStatement operacao = conexao.prepareStatement(sqlListarProjeto);
+        operacao.setInt(1, idprojeto);
+        operacao.execute();
+        ResultSet rs = operacao.getResultSet();
+        List<Tarefa> tarefas = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("idtarefa");
+            Projeto projeto = projetoDAO.listar(rs.getInt("fk_projeto"));
             String descricao = rs.getString("descricao");
             Integer duracao = rs.getInt("duracao");
             Double valorConclusao = rs.getDouble("valorPercentual");

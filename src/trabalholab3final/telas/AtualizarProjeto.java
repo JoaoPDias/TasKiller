@@ -66,6 +66,7 @@ public class AtualizarProjeto extends JFrame {
 
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         setSize(300, 150);
         setVisible(true);
 

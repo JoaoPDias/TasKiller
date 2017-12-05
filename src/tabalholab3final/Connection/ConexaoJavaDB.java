@@ -11,7 +11,7 @@ public class ConexaoJavaDB {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         String url = "jdbc:derby://localhost:1527/lab";
         String usuario = "usuario";
-        String senha = "1234";
+        String senha = "senha";
         return DriverManager.getConnection(url, usuario, senha);
 
     }

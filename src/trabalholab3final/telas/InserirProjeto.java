@@ -29,7 +29,7 @@ public class InserirProjeto extends JFrame {
     private JTextField txEmail;
 
     public InserirProjeto(DefaultTableModel md) {
-        super("Prohetos");
+        super("Projetos");
         criaJanela();
         modelo = md;
     }
@@ -51,6 +51,7 @@ public class InserirProjeto extends JFrame {
 
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         setSize(300, 150);
         setVisible(true);
         btSalvar.addActionListener(new BtSalvarListener());

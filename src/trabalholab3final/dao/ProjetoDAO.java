@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Projeto;
+import trabalholab3final.modelos.Tarefa;
 
 public class ProjetoDAO {
 
@@ -22,7 +23,7 @@ public class ProjetoDAO {
 
     public ProjetoDAO() throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
-        this.tarefaDAO = new TarefaDAO();
+        this.tarefaDAO = new TarefaDAO(this);
     }
 
     public void inserir(Projeto projeto) throws SQLException {
@@ -82,7 +83,7 @@ public class ProjetoDAO {
         while (rs.next()) {
             Integer idprojeto = rs.getInt("idprojeto");
             String descricao = rs.getString("descricao");
-            List<Tarefa> tarefas = tarefaDAO.listarPorProjeto(id);
+            List<Tarefa> tarefas = tarefaDAO.listarPorProjeto(idprojeto);
             p = new Projeto(idprojeto, descricao,tarefas);
             projetos.add(p);
         }

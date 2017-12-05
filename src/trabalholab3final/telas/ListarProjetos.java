@@ -29,6 +29,7 @@ public class ListarProjetos extends JFrame {
 
     public ListarProjetos() throws SQLException, ClassNotFoundException {
         super("TasKiller");
+        
         criaJTable();
         criaJanela();
     }
@@ -49,6 +50,7 @@ public class ListarProjetos extends JFrame {
 
         getContentPane().add(painelFundo);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setSize(500, 320);
         setVisible(true);
         btInserir.addActionListener(new BtInserirListener());
