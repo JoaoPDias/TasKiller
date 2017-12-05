@@ -18,9 +18,11 @@ public class ProjetoDAO {
     private String sqlExcluir = "DELETE FROM PROJETO WHERE idprojeto = ?";
     private String sqlListar = "SELECT * FROM PROJETO WHERE idprojeto = ?";
     private String sqlListarTodos = "SELECT * FROM PROJETO";
+    private TarefaDAO tarefaDAO;
 
     public ProjetoDAO() throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
+        this.tarefaDAO = new TarefaDAO();
     }
 
     public void inserir(Projeto projeto) throws SQLException {
@@ -62,7 +64,8 @@ public class ProjetoDAO {
         while (rs.next()) {
             Integer idprojeto = rs.getInt("idprojeto");
             String descricao = rs.getString("descricao");
-            p = new Projeto(idprojeto, descricao);
+            List<Tarefa> tarefas = tarefaDAO.listarPorProjeto(id);
+            p = new Projeto(idprojeto, descricao,tarefas);
         }
 
         operacao.close();
@@ -75,15 +78,16 @@ public class ProjetoDAO {
         operacao.execute();
         ResultSet rs = operacao.getResultSet();
         Projeto p = null;
-        List<Projeto> pessoas = new ArrayList<>();
+        List<Projeto> projetos = new ArrayList<>();
         while (rs.next()) {
             Integer idprojeto = rs.getInt("idprojeto");
             String descricao = rs.getString("descricao");
-            p = new Projeto(idprojeto, descricao);
-            pessoas.add(p);
+            List<Tarefa> tarefas = tarefaDAO.listarPorProjeto(id);
+            p = new Projeto(idprojeto, descricao,tarefas);
+            projetos.add(p);
         }
 
         operacao.close();
-        return pessoas;
+        return projetos;
     }
 }
