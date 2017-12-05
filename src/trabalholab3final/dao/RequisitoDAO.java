@@ -29,7 +29,7 @@ public class RequisitoDAO {
     private String sqlListarRequisitados = "SELECT fk_tarefa FROM requisito WHERE fk_tarefa_requisito = ?";
     private TarefaDAO tarefaDao;
 
-    RequisitoDAO(TarefaDAO tarefaDAO) throws SQLException, ClassNotFoundException {
+    public RequisitoDAO(TarefaDAO tarefaDAO) throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
         this.tarefaDao = tarefaDAO;
     }

@@ -18,7 +18,7 @@ public class TarefaPessoaDAO {
     private String sqlListarColaborador = "SELECT fk_pessoa FROM TAREFA_PESSOA WHERE fk_tarefa = ?";
     private PessoaDAO pessoaDAO;
 
-    TarefaPessoaDAO() throws SQLException, ClassNotFoundException {
+    public TarefaPessoaDAO() throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
         this.pessoaDAO = new PessoaDAO();
     }

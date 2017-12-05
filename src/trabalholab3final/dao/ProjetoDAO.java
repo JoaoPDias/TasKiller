@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import tabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Projeto;
 
@@ -15,8 +17,9 @@ public class ProjetoDAO {
     private String sqlAlterar = "UPDATE PROJETO SET descricao = ? WHERE idprojeto = ?";
     private String sqlExcluir = "DELETE FROM PROJETO WHERE idprojeto = ?";
     private String sqlListar = "SELECT * FROM PROJETO WHERE idprojeto = ?";
+    private String sqlListarTodos = "SELECT¨* FROM PROJETO";
 
-    ProjetoDAO() throws SQLException, ClassNotFoundException {
+    public ProjetoDAO() throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
     }
 
@@ -65,5 +68,22 @@ public class ProjetoDAO {
         operacao.close();
         return p;
 
+    }
+    
+     public List<Projeto> listarTodos() throws SQLException {
+        PreparedStatement operacao = conexao.prepareStatement(sqlListarTodos);
+        operacao.execute();
+        ResultSet rs = operacao.getResultSet();
+        Projeto p = null;
+        List<Projeto> pessoas = new ArrayList<>();
+        while (rs.next()) {
+            Integer idprojeto = rs.getInt("idprojeto");
+            String descricao = rs.getString("descricao");
+            p = new Projeto(idprojeto, descricao);
+            pessoas.add(p);
+        }
+
+        operacao.close();
+        return pessoas;
     }
 }

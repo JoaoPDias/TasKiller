@@ -5,9 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.spi.DirStateFactory;
+import java.util.ArrayList;
+import java.util.List;
 import tabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Pessoa;
 
@@ -18,8 +17,9 @@ public class PessoaDAO {
     private String sqlAlterar = "UPDATE PESSOA SET nome = ?, email = ? WHERE idpessoa = ?";
     private String sqlExcluir = "DELETE FROM PESSOA WHERE idpessoa = ?";
     private String sqlListar = "SELECT * FROM PESSOA WHERE idpessoa = ?";
+    private String sqlListarTodos = "SELECT¨* FROM PESSOA";
 
-    PessoaDAO() throws SQLException, ClassNotFoundException {
+    public PessoaDAO() throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
     }
 
@@ -71,6 +71,24 @@ public class PessoaDAO {
 
         operacao.close();
         return p;
+    }
+    
+    public List<Pessoa> listarTodos() throws SQLException {
+        PreparedStatement operacao = conexao.prepareStatement(sqlListarTodos);
+        operacao.execute();
+        ResultSet rs = operacao.getResultSet();
+        Pessoa p = null;
+        List<Pessoa> pessoas = new ArrayList<>();
+        while (rs.next()) {
+            Integer idpessoa = rs.getInt("idpessoa");
+            String nome = rs.getString("nome");
+            String email = rs.getString("email");
+            p = new Pessoa(idpessoa, nome, email);
+            pessoas.add(p);
+        }
+
+        operacao.close();
+        return pessoas;
     }
     /*
     public static void main(String[] args) {
