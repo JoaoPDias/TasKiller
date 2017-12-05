@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.media.MediaPlayer;
 import tabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Pessoa;
 import trabalholab3final.modelos.Projeto;
@@ -27,7 +26,7 @@ public class TarefaDAO {
     private String sqlListar = "SELECT * FROM TAREFA WHERE idtarefa = ?";
     private String sqlListarProjeto = "SELECT FROM TAREFA WHERE fk_projeto = ?";
     private String sqlAlterarStatus = "UPDATE TAREFA SET STATUS = ? WHERE idtarefa = ?";
-    private String sqlListarStatus = "SELECT * FROM TAREFAS WHERE status = ?"
+    private String sqlListarStatus = "SELECT * FROM TAREFAS WHERE status = ?";
 
     private RequisitoDAO requisitoDAO;
     private TarefaPessoaDAO tarefapessoaDAO;
@@ -155,10 +154,10 @@ public class TarefaDAO {
             LocalDate dataConclusao = rs.getDate("dataConclusao").toLocalDate();
             Status status = Status.valueOf(rs.getString("status"));
             List<Tarefa> requisitos = new ArrayList<>();
-            if (requisitoDAO.verificaRequisito(idtarefa)) {
-                requisitos.addAll(requisitoDAO.ListarTarefas(idtarefa));
+            if (requisitoDAO.verificaRequisito(id)) {
+                requisitos.addAll(requisitoDAO.ListarTarefas(id));
             }
-            List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(idtarefa);
+            List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(id);
             tarefas.add(new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, status, requisitos, colaboradores));
 
         }
@@ -167,7 +166,7 @@ public class TarefaDAO {
     }
     
     public List<Tarefa> listarPorStatus(Status status) throws SQLException {
-        PreparedStatement operacao = conexao.prepareStatement(sqlListarStatus)
+        PreparedStatement operacao = conexao.prepareStatement(sqlListarStatus);
         operacao.setString(1, status.toString());
         operacao.execute();
         ResultSet rs = operacao.getResultSet();
@@ -180,12 +179,12 @@ public class TarefaDAO {
             Double valorConclusao = rs.getDouble("valorPercentual");
             LocalDate dataInicio = rs.getDate("dataInicio").toLocalDate();
             LocalDate dataConclusao = rs.getDate("dataConclusao").toLocalDate();
-            Status status = Status.valueOf(rs.getString("status"));
+            Status statusTarefa = Status.valueOf(rs.getString("status"));
             List<Tarefa> requisitos = new ArrayList<>();
-            if (requisitoDAO.verificaRequisito(idtarefa)) {
-                requisitos.addAll(requisitoDAO.ListarTarefas(idtarefa));
+            if (requisitoDAO.verificaRequisito(id)) {
+                requisitos.addAll(requisitoDAO.ListarTarefas(id));
             }
-            List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(idtarefa);
+            List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(id);
             tarefas.add(new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, status, requisitos, colaboradores));
 
         }
