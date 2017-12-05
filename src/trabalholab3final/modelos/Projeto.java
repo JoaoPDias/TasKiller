@@ -1,14 +1,16 @@
-
 package trabalholab3final.modelos;
 
 import java.util.List;
 
-
 public class Projeto {
+
     private Integer id;
     private String descricao;
     private List<Tarefa> tarefas;
 
+    public Projeto() {
+    }
+    
     public Projeto(Integer id, String descricao) {
         this.id = id;
         this.descricao = descricao;
@@ -23,9 +25,6 @@ public class Projeto {
         this.descricao = descricao;
         this.tarefas = tarefas;
     }
-    
-    
-    
 
     public Integer getId() {
         return id;
@@ -50,7 +49,5 @@ public class Projeto {
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
     }
-    
-    
-    
+
 }

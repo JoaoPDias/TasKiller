@@ -17,7 +17,7 @@ public class ProjetoDAO {
     private String sqlAlterar = "UPDATE PROJETO SET descricao = ? WHERE idprojeto = ?";
     private String sqlExcluir = "DELETE FROM PROJETO WHERE idprojeto = ?";
     private String sqlListar = "SELECT * FROM PROJETO WHERE idprojeto = ?";
-    private String sqlListarTodos = "SELECT¨* FROM PROJETO";
+    private String sqlListarTodos = "SELECT * FROM PROJETO";
 
     public ProjetoDAO() throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();
