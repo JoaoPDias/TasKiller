@@ -130,7 +130,7 @@ public class TarefaDAO {
             List<Tarefa> requisitos = new ArrayList<>();
             List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(id);
             tarefa = new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, status, null, colaboradores);
-            if (requisitoDAO.verificaRequisito(id)) {
+            if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
         }
@@ -158,7 +158,7 @@ public class TarefaDAO {
             List<Tarefa> requisitos = new ArrayList<>();
             List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(id);
             Tarefa tarefa = new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, status, null, colaboradores);
-            if (requisitoDAO.verificaRequisito(id)) {
+            if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
             tarefas.add(tarefa);
@@ -186,7 +186,7 @@ public class TarefaDAO {
             List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(id);
             List<Tarefa> requisitos = new ArrayList<>();
             Tarefa tarefa = new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, statusTarefa, null, colaboradores);
-            if (requisitoDAO.verificaRequisito(id)) {
+            if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
             tarefas.add(tarefa);
@@ -212,7 +212,7 @@ public class TarefaDAO {
             List<Tarefa> requisitos = new ArrayList<>();
             List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(id);
             Tarefa tarefa = new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, statusTarefa, null, colaboradores);
-            if (requisitoDAO.verificaRequisito(id)) {
+            if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
             tarefas.add(tarefa);
@@ -223,8 +223,8 @@ public class TarefaDAO {
 
     public static void main(String[] args) {
         try {
-            Projeto p = new Projeto("Projeto J");
-            ProjetoDAO pdao = new ProjetoDAO();
+            /* Projeto p = new Projeto("Projeto J");
+            
             pdao.inserir(p);
             List<Tarefa> tarefas = new ArrayList<>();
             List<Pessoa> pessoas = new ArrayList<>();
@@ -238,7 +238,7 @@ public class TarefaDAO {
             pessoas.add(p1);
             pessoas.add(p2);
             pessoas.add(p3);
-            TarefaDAO tarefadao = new TarefaDAO(pdao);
+            
             Tarefa t1 = new Tarefa(p, "Tarefa 1", 180, 10.0, LocalDate.now(), LocalDate.now().plusDays(180), "DISPONIVEL", null, pessoas);
             tarefadao.inserir(t1);
             tarefas.add(t1);
@@ -246,27 +246,17 @@ public class TarefaDAO {
             tarefadao.inserir(t2);
             tarefas.add(t2);
             Tarefa t3 = new Tarefa(p, "Tarefa 3", 180, 10.0, LocalDate.now(), LocalDate.now().plusDays(180), "DISPONIVEL", tarefas, pessoas);
-            tarefadao.inserir(t3);
-            t1 = tarefadao.listar(1);
+            tarefadao.inserir(t3);*/
+            ProjetoDAO pdao = new ProjetoDAO();
+            TarefaDAO tarefadao = new TarefaDAO(pdao);
+            Tarefa t1 = tarefadao.listar(4);
             System.out.println(t1.getStatus().toString());
-            t2 = tarefadao.listar(2);
+            Tarefa t2 = tarefadao.listar(5);
             System.out.println(t2.getStatus().toString());
-            t3 = tarefadao.listar(3);
+            Tarefa t3 = tarefadao.listar(6);
             System.out.println(t3.getStatus().toString());
-            RequisitoDAO requisitoDAO = new RequisitoDAO(tarefadao);
-            System.out.println(requisitoDAO.verificaRequisito(1));
-            System.out.println(requisitoDAO.verificaRequisito(2));
-            System.out.println(requisitoDAO.verificaRequisito(3));
-            t1.setStatus(Status.CONCLUIDO.toString());
-            tarefadao.alterar(t1);
-            t2.setStatus(Status.CONCLUIDO.toString());
-            tarefadao.alterar(t2);
-            t2 = tarefadao.listar(2);
-            t3 = tarefadao.listar(3);
-            System.out.println(t2.getStatus().toString());
-            System.out.println(t3.getStatus().toString());
-            t3 = tarefadao.listar(3);
-            System.out.println(t3.getStatus().toString());
+            t3.setStatus(Status.ANDAMENTO.toString());
+            tarefadao.alterar(t3);
         } catch (SQLException ex) {
             Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

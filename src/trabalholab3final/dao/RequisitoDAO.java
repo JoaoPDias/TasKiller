@@ -26,7 +26,7 @@ public class RequisitoDAO {
     private String sqlVerificaRequisito = "SELECT fk_tarefa FROM requisito WHERE fk_tarefa = ? AND concluido is null";
     private String sqlConcluiRequisito = "UPDATE requisito SET concluido = TRUE WHERE fk_tarefa_requisito = ?";
     private String sqlListarRequisito = "SELECT fk_tarefa_requisito FROM requisito WHERE fk_tarefa = ?";
-    private String sqlListarRequisitados = "SELECT fk_tarefa FROM requisito WHERE fk_tarefa_requisito = ?";
+    private String sqlListarRequisitados = "SELECT fk_tarefa FROM requisito WHERE fk_tarefa_requisito = ? AND concluido = TRUE";
     private TarefaDAO tarefaDao;
 
     public RequisitoDAO(TarefaDAO tarefaDAO) throws SQLException, ClassNotFoundException {
@@ -45,7 +45,7 @@ public class RequisitoDAO {
 
     }
 
-    public boolean verificaRequisito(Integer id) throws SQLException {
+    public boolean naoHaRequisitos(Integer id) throws SQLException {
         PreparedStatement operacao = conexao.prepareStatement(sqlVerificaRequisito);
         operacao.setInt(1, id);
         operacao.execute();
@@ -72,7 +72,7 @@ public class RequisitoDAO {
         }
         return tarefas;
     }
-    
+
     public List<Tarefa> ListarRequisitados(Integer id) throws SQLException {
         PreparedStatement operacao = conexao.prepareStatement(sqlListarRequisitados);
         operacao.setInt(1, id);
@@ -81,7 +81,9 @@ public class RequisitoDAO {
         List<Tarefa> tarefas = new ArrayList<>();
         while (rs.next()) {
             Tarefa p = tarefaDao.listar(rs.getInt("fk_tarefa"));
-            tarefas.add(p);
+            if (this.naoHaRequisitos(p.getId())) {
+                tarefas.add(p);
+            }
         }
         return tarefas;
     }

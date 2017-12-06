@@ -26,7 +26,7 @@ public class TarefaListModel implements ListModel {
             tarefaDAO = new TarefaDAO(projetoDAO);
             this.tarefas = tarefaDAO.listarPorStatus(status, projeto);
             if(this.tarefas.isEmpty()){
-                this.tarefas.add(new Tarefa("Vazio"));
+                this.tarefas.add(new Tarefa("Não há tarefas nesse Status"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TarefaListModel.class.getName()).log(Level.SEVERE, null, ex);

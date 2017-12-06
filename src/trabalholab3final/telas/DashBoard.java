@@ -15,8 +15,10 @@ import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import trabalholab3final.modelos.Projeto;
@@ -31,6 +33,7 @@ public class DashBoard extends javax.swing.JFrame {
     private TarefaListModel modeloConcluidas;
 
     public DashBoard() throws SQLException, ClassNotFoundException {
+        super("DASHBOARD");
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tarefasBloqueadas = new javax.swing.JList<>();
@@ -75,13 +78,18 @@ public class DashBoard extends javax.swing.JFrame {
     private void initComponents() {
 
         Font font = new Font("Calibri", Font.PLAIN, 18);
-        Font fontTarefa = new Font("Calibri",Font.BOLD,18);
-        
+        Font fontTarefa = new Font("Calibri", Font.BOLD, 18);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new Dimension(500,500));
-        setMinimumSize(new Dimension(500,500));
+        setMaximumSize(new Dimension(500, 500));
+        setMinimumSize(new Dimension(500, 500));
         setResizable(false);
+
+        lstProjetos.setBackground(Color.black);
+        lstProjetos.setForeground(Color.WHITE);
+        lstProjetos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstProjetos.setFont(fontTarefa);
         tarefasBloqueadas.setBackground(new java.awt.Color(204, 0, 0));
         tarefasBloqueadas.setForeground(Color.WHITE);
         tarefasBloqueadas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -98,29 +106,35 @@ public class DashBoard extends javax.swing.JFrame {
         tarefasConcluidas.setFont(fontTarefa);
         tarefasConcluidas.setForeground(Color.WHITE);
         tarefasConcluidas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        JLabel lblProjetos =  new JLabel("Projetos");
-        JLabel lblBloqueadas =  new JLabel("Tarefas Bloqueadas");
-        JLabel lblDisponiveis =  new JLabel("Tarefas Disponíveis");
-        JLabel lblAndamento =  new JLabel("Tarefas Em Andamento");
-        JLabel lblConcluidas =  new JLabel("Tarefas Concluídas");
+        JLabel lblProjetos = new JLabel("Projetos");
+        JLabel lblBloqueadas = new JLabel("Tarefas Bloqueadas");
+        JLabel lblDisponiveis = new JLabel("Tarefas Disponíveis");
+        JLabel lblAndamento = new JLabel("Tarefas Em Andamento");
+        JLabel lblConcluidas = new JLabel("Tarefas Concluídas");
         lblProjetos.setFont(font);
         lblBloqueadas.setFont(font);
         lblDisponiveis.setFont(font);
         lblAndamento.setFont(font);
         lblConcluidas.setFont(font);
+
+        lblProjetos.setHorizontalAlignment(JLabel.CENTER);
+        lblBloqueadas.setHorizontalAlignment(JLabel.CENTER);
+        lblDisponiveis.setHorizontalAlignment(JLabel.CENTER);
+        lblAndamento.setHorizontalAlignment(JLabel.CENTER);
+        lblConcluidas.setHorizontalAlignment(JLabel.CENTER);
         JPanel titulo = new JPanel(new GridLayout(1, 5));
-        titulo.add(lblProjetos,BorderLayout.CENTER);
-        titulo.add(lblBloqueadas,BorderLayout.CENTER);
-        titulo.add(lblDisponiveis,BorderLayout.CENTER);
-        titulo.add(lblAndamento,BorderLayout.CENTER);
-        titulo.add(lblConcluidas,BorderLayout.CENTER);
-        add(titulo,BorderLayout.NORTH);
+        titulo.add(lblProjetos, BorderLayout.CENTER);
+        titulo.add(lblBloqueadas, BorderLayout.CENTER);
+        titulo.add(lblDisponiveis, BorderLayout.CENTER);
+        titulo.add(lblAndamento, BorderLayout.CENTER);
+        titulo.add(lblConcluidas, BorderLayout.CENTER);
+        add(titulo, BorderLayout.NORTH);
         jScrollPane1.setViewportView(tarefasBloqueadas);
         jScrollPane2.setViewportView(tarefasDisponiveis);
         jScrollPane3.setViewportView(tarefasAndamento);
         jScrollPane4.setViewportView(tarefasConcluidas);
         jScrollPane5.setViewportView(lstProjetos);
-        
+
         JPanel corpo = new JPanel(new GridLayout(1, 5));
         corpo.add(jScrollPane5);
         corpo.add(jScrollPane1);
