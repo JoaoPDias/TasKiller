@@ -66,6 +66,11 @@ public class ListarPessoas extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar Pessoa");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir Pessoa");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +127,10 @@ public class ListarPessoas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao tentar excluir");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
