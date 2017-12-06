@@ -135,7 +135,8 @@ public class ListarProjetos extends JFrame {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        ListarProjetos lc = new ListarProjetos();
-        lc.setVisible(true);
+        //ListarProjetos lc = new ListarProjetos();
+        DashBoard dash = new DashBoard();
+        dash.setVisible(true);
     }
 }
