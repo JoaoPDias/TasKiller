@@ -27,6 +27,7 @@ public class TarefaDAO {
     private String sqlListarProjeto = "SELECT * FROM TAREFA WHERE fk_projeto = ?";
     private String sqlAlterarStatus = "UPDATE TAREFA SET STATUS = ? WHERE idtarefa = ?";
     private String sqlListarStatus = "SELECT * FROM TAREFA WHERE status = ? AND fk_projeto = ?";
+    private String sqlListarApenasStatus = "SELECT * FROM TAREFA WHERE status = ?";
     private String sqlListarTodos = "SELECT * FROM TAREFA";
 
     private RequisitoDAO requisitoDAO;
@@ -167,7 +168,32 @@ public class TarefaDAO {
         return tarefas;
 
     }
+public List<Tarefa> listarApenasStatus(Status status) throws SQLException {
+        PreparedStatement operacao = conexao.prepareStatement(sqlListarApenasStatus);
+        operacao.setString(1, status.toString());
+        operacao.execute();
+        ResultSet rs = operacao.getResultSet();
+        List<Tarefa> tarefas = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("idtarefa");
+            Projeto projeto = projetoDAO.listar(rs.getInt("fk_projeto"));
+            String descricao = rs.getString("descricao");
+            Integer duracao = rs.getInt("duracao");
+            Double valorConclusao = rs.getDouble("valorPercentual");
+            LocalDate dataInicio = rs.getDate("dataInicio").toLocalDate();
+            LocalDate dataConclusao = rs.getDate("dataConclusao").toLocalDate();
+            Status statusTarefa = Status.valueOf(rs.getString("status"));
+            List<Pessoa> colaboradores = tarefapessoaDAO.ListarPessoas(id);
+            List<Tarefa> requisitos = new ArrayList<>();
+            Tarefa tarefa = new Tarefa(id, projeto, descricao, duracao, valorConclusao, dataInicio, dataConclusao, statusTarefa, null, colaboradores);
+            if (requisitoDAO.naoHaRequisitos(id)) {
+                requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
+            }
+            tarefas.add(tarefa);
+        }
+        return tarefas;
 
+    }
     public List<Tarefa> listarPorStatus(Status status, Projeto projeto) throws SQLException {
         PreparedStatement operacao = conexao.prepareStatement(sqlListarStatus);
         operacao.setString(1, status.toString());

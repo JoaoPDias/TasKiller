@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import trabalholab3final.dao.ProjetoDAO;
 import trabalholab3final.dao.TarefaDAO;
+import trabalholab3final.modelos.Status;
 import trabalholab3final.modelos.Tarefa;
 
 
@@ -23,6 +24,11 @@ public class TarefaTableModel extends AbstractTableModel {
             
             this.tarefaDAO = new TarefaDAO(projetoDAO);
             this.tarefas = tarefaDAO.listarTodos();       
+    }
+    
+    public TarefaTableModel(Status status) throws SQLException, ClassNotFoundException{
+        this.tarefaDAO = new TarefaDAO(projetoDAO);
+        this.tarefas = tarefaDAO.listarApenasStatus(status);
     }
 
     @Override
