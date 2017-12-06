@@ -1,11 +1,10 @@
-
 package trabalholab3final.modelos;
 
 import java.time.LocalDate;
 import java.util.List;
 
-
 public class Tarefa {
+
     private Integer id;
     private Projeto projeto;
     private String descricao;
@@ -54,10 +53,11 @@ public class Tarefa {
         this.requisitos = requisitos;
         this.colaboradores = colaboradores;
     }
-    
-    
 
-    
+    public Tarefa(String descricao) {
+        this.descricao = descricao;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -137,7 +137,10 @@ public class Tarefa {
     public void setColaboradores(List<Pessoa> colaboradores) {
         this.colaboradores = colaboradores;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return descricao;
+    }
+
 }

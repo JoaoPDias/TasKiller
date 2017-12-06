@@ -1,4 +1,4 @@
-package tabalholab3final.Connection;
+package trabalholab3final.Connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ public class ConexaoJavaDB {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         String url = "jdbc:derby://localhost:1527/lab";
         String usuario = "usuario";
-        String senha = "senha";
+        String senha = "1234";
         return DriverManager.getConnection(url, usuario, senha);
 
     }

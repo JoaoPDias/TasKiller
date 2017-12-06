@@ -50,4 +50,10 @@ public class Projeto {
         this.tarefas = tarefas;
     }
 
+    @Override
+    public String toString() {
+        return descricao;
+    }
+    
+    
 }
