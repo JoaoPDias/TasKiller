@@ -1,9 +1,10 @@
-
 package trabalholab3final.modelos;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class Pessoa {
+
     private Integer id;
     private String nome;
     private String email;
@@ -26,11 +27,11 @@ public class Pessoa {
         this.nome = nome;
         this.email = email;
     }
-    
-    
 
-    
-    
+    public Pessoa() {
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -44,7 +45,12 @@ public class Pessoa {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if (!nome.isEmpty()) {
+            this.nome = nome;
+        } else {
+            JOptionPane.showMessageDialog(null, "Nome está vazio");
+        }
+
     }
 
     public String getEmail() {
@@ -52,7 +58,12 @@ public class Pessoa {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (!email.isEmpty()) {
+            this.email = email;
+        } else {
+            JOptionPane.showMessageDialog(null, "Nome está vazio");
+        }
+
     }
 
     public List<Tarefa> getTarefas() {
@@ -62,6 +73,5 @@ public class Pessoa {
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
     }
-    
-    
+
 }

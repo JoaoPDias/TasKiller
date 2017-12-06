@@ -17,7 +17,7 @@ public class PessoaDAO {
     private String sqlAlterar = "UPDATE PESSOA SET nome = ?, email = ? WHERE idpessoa = ?";
     private String sqlExcluir = "DELETE FROM PESSOA WHERE idpessoa = ?";
     private String sqlListar = "SELECT * FROM PESSOA WHERE idpessoa = ?";
-    private String sqlListarTodos = "SELECT¨* FROM PESSOA";
+    private String sqlListarTodos = "SELECT * FROM PESSOA";
 
     public PessoaDAO() throws SQLException, ClassNotFoundException {
         this.conexao = ConexaoJavaDB.getConnection();

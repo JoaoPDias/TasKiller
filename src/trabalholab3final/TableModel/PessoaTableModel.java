@@ -76,5 +76,9 @@ public class PessoaTableModel extends AbstractTableModel {
 		this.pessoas = pessoaDAO.listarTodos();
         this.fireTableDataChanged();
     }
+    
+    public Pessoa getRow(Integer id){
+        return pessoas.get(id);
+    }
 
 }
