@@ -27,7 +27,7 @@ public class TarefaDAO {
     private String sqlListarProjeto = "SELECT * FROM TAREFA WHERE fk_projeto = ?";
     private String sqlAlterarStatus = "UPDATE TAREFA SET STATUS = ? WHERE idtarefa = ?";
     private String sqlListarStatus = "SELECT * FROM TAREFA WHERE status = ? AND fk_projeto = ?";
-    private String sqlListarTodos = "SELECT¨* FROM TAREFA";
+    private String sqlListarTodos = "SELECT * FROM TAREFA";
 
     private RequisitoDAO requisitoDAO;
     private TarefaPessoaDAO tarefapessoaDAO;
@@ -221,8 +221,8 @@ public class TarefaDAO {
 
     }
 
-    public static void main(String[] args) {
-        try {
+    //public static void main(String[] args) {
+        //try {
             /* Projeto p = new Projeto("Projeto J");
             
             pdao.inserir(p);
@@ -247,21 +247,21 @@ public class TarefaDAO {
             tarefas.add(t2);
             Tarefa t3 = new Tarefa(p, "Tarefa 3", 180, 10.0, LocalDate.now(), LocalDate.now().plusDays(180), "DISPONIVEL", tarefas, pessoas);
             tarefadao.inserir(t3);*/
-            ProjetoDAO pdao = new ProjetoDAO();
-            TarefaDAO tarefadao = new TarefaDAO(pdao);
-            Tarefa t1 = tarefadao.listar(4);
-            System.out.println(t1.getStatus().toString());
-            Tarefa t2 = tarefadao.listar(5);
-            System.out.println(t2.getStatus().toString());
-            Tarefa t3 = tarefadao.listar(6);
-            System.out.println(t3.getStatus().toString());
-            t3.setStatus(Status.ANDAMENTO.toString());
-            tarefadao.alterar(t3);
-        } catch (SQLException ex) {
-            Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+         //   ProjetoDAO pdao = new ProjetoDAO();
+         //   TarefaDAO tarefadao = new TarefaDAO(pdao);
+         //   Tarefa t1 = tarefadao.listar(4);
+         //   System.out.println(t1.getStatus().toString());
+         //   Tarefa t2 = tarefadao.listar(5);
+         //   System.out.println(t2.getStatus().toString());
+         //   Tarefa t3 = tarefadao.listar(6);
+         //   System.out.println(t3.getStatus().toString());
+         //   t3.setStatus(Status.ANDAMENTO.toString());
+         //   tarefadao.alterar(t3);
+       // } catch (SQLException ex) {
+          //  Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        //} catch (ClassNotFoundException ex) {
+        //   Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        //}
+    //}
 
 }

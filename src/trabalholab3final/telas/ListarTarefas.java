@@ -1,12 +1,18 @@
 package trabalholab3final.telas;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import trabalholab3final.ListModel.TarefaListModel;
-
+import trabalholab3final.TableModel.TarefaTableModel;
 
 public class ListarTarefas extends javax.swing.JFrame {
 
-    private TarefaListModel modeloDisponiveis;
-    private TarefaListModel modeloConcluidas;
+    private TarefaTableModel modeloDisponiveis;
+    private TarefaTableModel modeloConcluidas;
+    private TarefaTableModel modeloFazer;
+    private TarefaTableModel modeloTodas;
+
     public ListarTarefas() {
         super("Tarefas");
         initComponents();
@@ -21,16 +27,21 @@ public class ListarTarefas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        todas = new javax.swing.JButton();
         tarefasConcluidas = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         tarefasDisponiveis = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaTarefas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Listar tarefas");
+        todas.setText("Listar tarefas");
+        todas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                todasActionPerformed(evt);
+            }
+        });
 
         tarefasConcluidas.setText("Tarefas Concluídas");
         tarefasConcluidas.addActionListener(new java.awt.event.ActionListener() {
@@ -48,7 +59,7 @@ public class ListarTarefas extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,7 +70,7 @@ public class ListarTarefas extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelaTarefas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,9 +82,9 @@ public class ListarTarefas extends javax.swing.JFrame {
                     .addComponent(tarefasConcluidas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tarefasDisponiveis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(todas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 922, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -82,7 +93,7 @@ public class ListarTarefas extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(jButton1)
+                        .addComponent(todas)
                         .addGap(37, 37, 37)
                         .addComponent(jButton3)
                         .addGap(33, 33, 33)
@@ -103,8 +114,22 @@ public class ListarTarefas extends javax.swing.JFrame {
     }//GEN-LAST:event_tarefasConcluidasActionPerformed
 
     private void tarefasDisponiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tarefasDisponiveisActionPerformed
-        
+        // TODO add your handling code here:
     }//GEN-LAST:event_tarefasDisponiveisActionPerformed
+
+    private void todasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todasActionPerformed
+        try {
+            modeloTodas = new TarefaTableModel();
+            tabelaTarefas.setModel(modeloTodas);
+            tabelaTarefas.updateUI();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ListarTarefas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ListarTarefas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_todasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,11 +167,11 @@ public class ListarTarefas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabelaTarefas;
     private javax.swing.JButton tarefasConcluidas;
     private javax.swing.JButton tarefasDisponiveis;
+    private javax.swing.JButton todas;
     // End of variables declaration//GEN-END:variables
 }

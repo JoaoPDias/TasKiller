@@ -49,9 +49,9 @@ public class TarefaTableModel extends AbstractTableModel {
             case 4:
                 return Double.toString(tarefas.get(rowIndex).getValorConclusao());
             case 5:
-                return tarefas.get(rowIndex).getDataInicio().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+                return tarefas.get(rowIndex).getDataInicio().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
 			case 6:
-                return tarefas.get(rowIndex).getDataConclusao().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)); 
+                return tarefas.get(rowIndex).getDataConclusao().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)); 
 			case 7:
                 return tarefas.get(rowIndex).getStatus().toString(); 
             default:
