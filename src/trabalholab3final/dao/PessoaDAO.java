@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import tabalholab3final.Connection.ConexaoJavaDB;
+import trabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Pessoa;
 
 public class PessoaDAO {

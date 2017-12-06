@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import tabalholab3final.Connection.ConexaoJavaDB;
+import trabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Pessoa;
 import trabalholab3final.modelos.Tarefa;
 

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import tabalholab3final.Connection.ConexaoJavaDB;
+import trabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Projeto;
 import trabalholab3final.modelos.Tarefa;
 
@@ -65,9 +65,10 @@ public class ProjetoDAO {
         while (rs.next()) {
             Integer idprojeto = rs.getInt("idprojeto");
             String descricao = rs.getString("descricao");
-            List<Tarefa> tarefas = tarefaDAO.listarPorProjeto(id);
-            p = new Projeto(idprojeto, descricao,tarefas);
+            p = new Projeto(idprojeto, descricao);
         }
+            List<Tarefa> tarefas = tarefaDAO.listarPorProjeto(p);
+            p.setTarefas(tarefas);
 
         operacao.close();
         return p;
@@ -83,8 +84,9 @@ public class ProjetoDAO {
         while (rs.next()) {
             Integer idprojeto = rs.getInt("idprojeto");
             String descricao = rs.getString("descricao");
-            List<Tarefa> tarefas = tarefaDAO.listarPorProjeto(idprojeto);
-            p = new Projeto(idprojeto, descricao,tarefas);
+            p = new Projeto(idprojeto, descricao);
+            List<Tarefa> tarefas = tarefaDAO.listarPorProjeto(p);
+            p.setTarefas(tarefas);
             projetos.add(p);
         }
 

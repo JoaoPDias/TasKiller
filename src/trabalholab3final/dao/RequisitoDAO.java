@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import tabalholab3final.Connection.ConexaoJavaDB;
+import trabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Tarefa;
 
 /**
@@ -60,14 +60,14 @@ public class RequisitoDAO {
 
     }
 
-    public List<Tarefa> ListarTarefas(Integer id) throws SQLException {
+    public List<Tarefa> ListarTarefas(Tarefa tarefa) throws SQLException {
         PreparedStatement operacao = conexao.prepareStatement(sqlListarRequisito);
-        operacao.setInt(1, id);
+        operacao.setInt(1, tarefa.getId());
         operacao.execute();
         ResultSet rs = operacao.getResultSet();
         List<Tarefa> tarefas = new ArrayList<>();
         while (rs.next()) {
-            Tarefa p = tarefaDao.listar(rs.getInt("fk_tarefa_requisito"));
+            Tarefa p = tarefa;
             tarefas.add(p);
         }
         return tarefas;
