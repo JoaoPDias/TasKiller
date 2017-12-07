@@ -66,7 +66,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         btnDashboard.setBackground(new java.awt.Color(255, 255, 255));
         btnDashboard.setForeground(new java.awt.Color(0, 102, 255));
-        btnDashboard.setIcon(new javax.swing.ImageIcon("C:\\Users\\Pedro\\Downloads\\TasKiller\\icones\\dashboard.png")); // NOI18N
+        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalholab3final/icones/dashboard.png"))); // NOI18N
         btnDashboard.setText(" Dashboard");
         btnDashboard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +76,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         btnTarefa.setBackground(new java.awt.Color(255, 255, 255));
         btnTarefa.setForeground(new java.awt.Color(0, 102, 255));
-        btnTarefa.setIcon(new javax.swing.ImageIcon("C:\\Users\\Pedro\\Downloads\\TasKiller\\icones\\icon.png")); // NOI18N
+        btnTarefa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalholab3final/icones/icon.png"))); // NOI18N
         btnTarefa.setText(" Tarefas");
         btnTarefa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,7 +86,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         btnProjeto.setBackground(new java.awt.Color(255, 255, 255));
         btnProjeto.setForeground(new java.awt.Color(0, 102, 255));
-        btnProjeto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Pedro\\Downloads\\TasKiller\\icones\\idea.png")); // NOI18N
+        btnProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalholab3final/icones/idea.png"))); // NOI18N
         btnProjeto.setText("Projetos");
         btnProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +96,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         btnPessoa.setBackground(new java.awt.Color(255, 255, 255));
         btnPessoa.setForeground(new java.awt.Color(0, 102, 255));
-        btnPessoa.setIcon(new javax.swing.ImageIcon("C:\\Users\\Pedro\\Downloads\\TasKiller\\icones\\multiple-users-silhouette.png")); // NOI18N
+        btnPessoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalholab3final/icones/multiple-users-silhouette.png"))); // NOI18N
         btnPessoa.setText(" Pessoas");
         btnPessoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
