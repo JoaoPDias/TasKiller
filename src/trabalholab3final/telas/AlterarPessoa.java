@@ -104,12 +104,12 @@ public class AlterarPessoa extends javax.swing.JFrame {
     }//GEN-LAST:event_campoEmailActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        try {
+        /*try {
             
             this.setVisible(false);
         } catch (SQLException ex) {
             Logger.getLogger(InserirPessoa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
