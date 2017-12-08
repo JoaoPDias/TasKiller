@@ -419,7 +419,7 @@ public class InserirTarefa extends javax.swing.JFrame {
         lstColaboradores.setModel(new PessoaListModel());
         lstPessoas.setModel(new PessoaListModel(true));
         lstRequisitos.setModel(new TarefaListModel());
-        lstTarefas.setModel(new TarefaListModel());
+        lstTarefas.setModel(new TarefaListModel(true));
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

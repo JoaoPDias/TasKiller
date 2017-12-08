@@ -21,24 +21,8 @@ public class AlterarTarefa extends javax.swing.JFrame {
     Status status[];
     Integer idTarefa;
 
-    public AlterarTarefa(ListarTarefas listar, Tarefa tarefa) {
+    public AlterarTarefa() {
         super("Alterar Tarefa");
-        idTarefa=tarefa.getId();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        this.listarTarefa = listar;
-        status = Status.values();
-        initComponents();
-        this.listarTarefa = listar;
-        projetoCombo.setSelectedIndex(tarefa.getProjeto());
-        txtDuracao.setText(Integer.toString(tarefa.getDuracao()));
-        dataInicio.setText(tarefa.getDataInicio().format(formatter));
-        dataFinal.setText(tarefa.getDataConclusao().format(formatter));
-        txtPorcentagem.setText(tarefa.getValorConclusao().toString());
-        if (tarefa.getStatus() == Status.BLOQUEADO || tarefa.getStatus() == Status.CONCLUIDO) {
-            statusCombo.setEnabled(false);
-        }
-        statusCombo.setSelectedItem(tarefa.getStatus());
-        descricaotxt.setText(tarefa.getDescricao());
     }
 
     @SuppressWarnings("unchecked")
@@ -216,7 +200,7 @@ public class AlterarTarefa extends javax.swing.JFrame {
             status = (Status) statusCombo.getSelectedItem();
 
             descricao = descricaotxt.getText();
-            Tarefa tarefa = new Tarefa(idTarefa,projeto, descricao, duracao, porcentagem, dtinicio, dtfinal, status);
+            Tarefa tarefa = new Tarefa(idTarefa, projeto, descricao, duracao, porcentagem, dtinicio, dtfinal, status);
             this.listarTarefa.AlterarTarefa(this, tarefa);
 
         } catch (NumberFormatException ex) {
@@ -233,6 +217,24 @@ public class AlterarTarefa extends javax.swing.JFrame {
 
     }
 
+    public void solicitaAlteracao(ListarTarefas listar, Tarefa tarefa) {
+        idTarefa = tarefa.getId();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        this.listarTarefa = listar;
+        status = Status.values();
+        initComponents();
+        this.listarTarefa = listar;
+        projetoCombo.setSelectedIndex(tarefa.getProjeto());
+        txtDuracao.setText(Integer.toString(tarefa.getDuracao()));
+        dataInicio.setText(tarefa.getDataInicio().format(formatter));
+        dataFinal.setText(tarefa.getDataConclusao().format(formatter));
+        txtPorcentagem.setText(tarefa.getValorConclusao().toString());
+        if (tarefa.getStatus() == Status.BLOQUEADO || tarefa.getStatus() == Status.CONCLUIDO) {
+            statusCombo.setEnabled(false);
+        }
+        statusCombo.setSelectedItem(tarefa.getStatus());
+        descricaotxt.setText(tarefa.getDescricao());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Salvar;
     private javax.swing.JLabel dataFimLbl;

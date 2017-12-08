@@ -57,8 +57,12 @@ public class TarefaListModel implements ListModel {
     
     public TarefaListModel(boolean valor) {
         try {
+            ProjetoDAO projetoDAO = new ProjetoDAO();
+            TarefaDAO tarefaDAO = new TarefaDAO(projetoDAO);
             this.tarefas = tarefaDAO.listarTodos();
         } catch (SQLException ex) {
+            Logger.getLogger(TarefaListModel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(TarefaListModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

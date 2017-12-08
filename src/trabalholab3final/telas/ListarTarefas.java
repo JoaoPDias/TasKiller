@@ -232,7 +232,7 @@ public class ListarTarefas extends javax.swing.JFrame {
         btn_Inserir.setVisible(true);
         btn_Editar.setVisible(true);
         btn_Excluir.setVisible(true);
-        tabelaTarefas.setModel(modeloTodas);
+        tabelaTarefas.setModel(new TarefaTableModel());
 
         tabelaTarefas.updateUI();
         tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
@@ -285,7 +285,8 @@ public class ListarTarefas extends javax.swing.JFrame {
         int linhaSelecionada = tabelaTarefas.getSelectedRow();
         if (linhaSelecionada >= 0) {
             Tarefa tarefa = ((TarefaTableModel) modeloTodas).getRow(tabelaTarefas.getSelectedRow());
-            AlterarTarefa alterar = new AlterarTarefa(this, tarefa);
+            AlterarTarefa alterar = new AlterarTarefa();
+            alterar.solicitaAlteracao(this, tarefa);
             alterar.setVisible(true);
             alterar.setLocationRelativeTo(this);
         } else {
@@ -333,6 +334,7 @@ public class ListarTarefas extends javax.swing.JFrame {
             TarefaTableModel modelo = new TarefaTableModel();
             modelo.editRow(tarefa);
             tabelaTarefas.setModel(modelo);
+            modeloTodas=modelo;
 
             tabelaTarefas.updateUI();
             tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
