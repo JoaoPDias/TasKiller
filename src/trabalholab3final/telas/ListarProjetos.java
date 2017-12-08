@@ -29,7 +29,7 @@ public class ListarProjetos extends JFrame {
 
     public ListarProjetos() throws SQLException, ClassNotFoundException {
         super("TasKiller");
-        
+
         criaJTable();
         criaJanela();
     }
@@ -49,8 +49,7 @@ public class ListarProjetos extends JFrame {
         painelFundo.add(BorderLayout.SOUTH, painelBotoes);
 
         getContentPane().add(painelFundo);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         setSize(500, 320);
         setVisible(true);
         btInserir.addActionListener(new BtInserirListener());
@@ -80,6 +79,7 @@ public class ListarProjetos extends JFrame {
         public void actionPerformed(ActionEvent e) {
             InserirProjeto ip = new InserirProjeto(modelo);
             ip.setVisible(true);
+            ip.setLocationRelativeTo(getInstance());
         }
 
     }
@@ -91,16 +91,17 @@ public class ListarProjetos extends JFrame {
             linhaSelecionada = tabela.getSelectedRow();
             if (linhaSelecionada >= 0) {
                 int idProjeto = (int) tabela.getValueAt(linhaSelecionada, 0);
-                
+
                 try {
-                    AtualizarProjeto ip = new AtualizarProjeto(modelo, idProjeto, linhaSelecionada);
+                    AlterarProjeto ip = new AlterarProjeto(modelo, idProjeto, linhaSelecionada);
                     ip.setVisible(true);
+                    ip.setLocationRelativeTo(getInstance());
                 } catch (SQLException ex) {
                     Logger.getLogger(ListarProjetos.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(ListarProjetos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
             }
@@ -123,15 +124,19 @@ public class ListarProjetos extends JFrame {
                     JOptionPane.showMessageDialog(null, "Não é possível excluir esse projeto.");
                     Logger.getLogger(ListarProjetos.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+                    JOptionPane.showMessageDialog(null, "É necessário selecionar uma linha.");
                     Logger.getLogger(ListarProjetos.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+                JOptionPane.showMessageDialog(null, "É necessário selecionar uma linha.");
             }
         }
 
+    }
+
+    private ListarProjetos getInstance() {
+        return this;
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {

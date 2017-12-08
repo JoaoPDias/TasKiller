@@ -27,6 +27,7 @@ public class InserirPessoa extends javax.swing.JFrame {
         super("Inserir Pessoa");
         initComponents();
         this.lp = lp;
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     /**
@@ -62,6 +63,8 @@ public class InserirPessoa extends javax.swing.JFrame {
             }
         });
 
+        btnSalvar.setBackground(new java.awt.Color(0, 204, 51));
+        btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

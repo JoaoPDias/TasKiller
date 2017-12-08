@@ -9,7 +9,7 @@ public class ConexaoJavaDB {
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
-        String url = "jdbc:derby://localhost:1527/lab";
+        String url = "jdbc:derby://localhost:1527/lab1";
         String usuario = "usuario";
         String senha = "1234";
         return DriverManager.getConnection(url, usuario, senha);

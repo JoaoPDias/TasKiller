@@ -53,9 +53,31 @@ public class Tarefa {
         this.requisitos = requisitos;
         this.colaboradores = colaboradores;
     }
-
+    
+    public Tarefa(Projeto projeto, String descricao, Integer duracao, Double valorConclusao, LocalDate dataInicio, LocalDate dataConclusao, Status status, List<Tarefa> requisitos, List<Pessoa> colaboradores) {
+        this.projeto = projeto;
+        this.descricao = descricao;
+        this.duracao = duracao;
+        this.valorConclusao = valorConclusao;
+        this.dataInicio = dataInicio;
+        this.dataConclusao = dataConclusao;
+        this.status = status;
+        this.requisitos = requisitos;
+        this.colaboradores = colaboradores;
+    }
     public Tarefa(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Tarefa(Integer id,Projeto projeto, String descricao, Integer duracao, Double porcentagem, LocalDate dtinicio, LocalDate dtfinal, Status status) {
+        this.id = id;
+        this.projeto = projeto;
+        this.descricao = descricao;
+        this.duracao = duracao;
+        this.valorConclusao = porcentagem;
+        this.dataInicio = dtinicio;
+        this.dataConclusao = dtfinal;
+        this.status = status;
     }
 
     public Integer getId() {

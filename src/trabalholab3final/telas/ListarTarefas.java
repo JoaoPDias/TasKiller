@@ -3,9 +3,13 @@ package trabalholab3final.telas;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import trabalholab3final.ListModel.TarefaListModel;
 import trabalholab3final.TableModel.TarefaTableModel;
 import trabalholab3final.modelos.Status;
+import trabalholab3final.modelos.Tarefa;
+import trabalholab3final.util.Mensagem;
+import trabalholab3final.utilitarios.TableRenderer;
 
 public class ListarTarefas extends javax.swing.JFrame {
 
@@ -14,10 +18,15 @@ public class ListarTarefas extends javax.swing.JFrame {
     private TarefaTableModel modeloEmAndamento;
     private TarefaTableModel modeloTodas;
     private TarefaTableModel modeloBloqueadas;
+    private InserirTarefa inserir;
 
     public ListarTarefas() {
         super("Tarefas");
+        inserir = new InserirTarefa(this);
+        modeloTodas = new TarefaTableModel();
         initComponents();
+        tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
+        setResizable(false);
     }
 
     /**
@@ -29,23 +38,22 @@ public class ListarTarefas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        todas = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         tarefasConcluidas = new javax.swing.JButton();
         emAndamento = new javax.swing.JButton();
         tarefasDisponiveis = new javax.swing.JButton();
+        btn_Inserir = new javax.swing.JButton();
+        bloqueadas = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaTarefas = new javax.swing.JTable();
-        bloqueadas = new javax.swing.JButton();
+        btn_Editar = new javax.swing.JButton();
+        todas = new javax.swing.JButton();
+        btn_Excluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        todas.setText("Listar tarefas");
-        todas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                todasActionPerformed(evt);
-            }
-        });
-
+        tarefasConcluidas.setBackground(new java.awt.Color(0, 102, 255));
+        tarefasConcluidas.setForeground(new java.awt.Color(255, 255, 255));
         tarefasConcluidas.setText("Tarefas Concluídas");
         tarefasConcluidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -53,6 +61,8 @@ public class ListarTarefas extends javax.swing.JFrame {
             }
         });
 
+        emAndamento.setBackground(new java.awt.Color(0, 102, 255));
+        emAndamento.setForeground(new java.awt.Color(255, 255, 255));
         emAndamento.setText("Tarefas em Andamento");
         emAndamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,6 +70,8 @@ public class ListarTarefas extends javax.swing.JFrame {
             }
         });
 
+        tarefasDisponiveis.setBackground(new java.awt.Color(0, 102, 255));
+        tarefasDisponiveis.setForeground(new java.awt.Color(255, 255, 255));
         tarefasDisponiveis.setText("Tarefas Disponíveis");
         tarefasDisponiveis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,19 +79,17 @@ public class ListarTarefas extends javax.swing.JFrame {
             }
         });
 
-        tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nome do Projeto", "Descrição da Tarefa", "Duração", "% de Conclusão", "Data de Início", "Data de Conclusão", "Status"
+        btn_Inserir.setBackground(new java.awt.Color(0, 102, 255));
+        btn_Inserir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Inserir.setText("Inserir Tarefa");
+        btn_Inserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_InserirActionPerformed(evt);
             }
-        ));
-        jScrollPane1.setViewportView(tabelaTarefas);
+        });
 
+        bloqueadas.setBackground(new java.awt.Color(0, 102, 255));
+        bloqueadas.setForeground(new java.awt.Color(255, 255, 255));
         bloqueadas.setText("Tarefas Bloqueadas");
         bloqueadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,28 +97,69 @@ public class ListarTarefas extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        tabelaTarefas.setModel(new TarefaTableModel());
+        jScrollPane1.setViewportView(tabelaTarefas);
+
+        btn_Editar.setBackground(new java.awt.Color(0, 102, 255));
+        btn_Editar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Editar.setText("Editar Tarefa");
+        btn_Editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EditarActionPerformed(evt);
+            }
+        });
+
+        todas.setBackground(new java.awt.Color(0, 102, 255));
+        todas.setForeground(new java.awt.Color(255, 255, 255));
+        todas.setText("Listar tarefas");
+        todas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                todasActionPerformed(evt);
+            }
+        });
+
+        btn_Excluir.setBackground(new java.awt.Color(0, 102, 255));
+        btn_Excluir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Excluir.setText("Excluir Tarefa");
+        btn_Excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ExcluirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(todas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tarefasConcluidas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tarefasDisponiveis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(emAndamento, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                    .addComponent(bloqueadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 922, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(todas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tarefasConcluidas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tarefasDisponiveis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(emAndamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bloqueadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 922, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_Inserir)
+                        .addGap(147, 147, 147)
+                        .addComponent(btn_Editar)
+                        .addGap(178, 178, 178)
+                        .addComponent(btn_Excluir)
+                        .addGap(190, 190, 190)))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
                         .addComponent(todas)
                         .addGap(30, 30, 30)
                         .addComponent(tarefasConcluidas)
@@ -118,20 +169,41 @@ public class ListarTarefas extends javax.swing.JFrame {
                         .addComponent(emAndamento)
                         .addGap(33, 33, 33)
                         .addComponent(bloqueadas))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Inserir)
+                    .addComponent(btn_Editar)
+                    .addComponent(btn_Excluir))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tarefasConcluidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tarefasConcluidasActionPerformed
+        btn_Inserir.setVisible(false);
+        btn_Editar.setVisible(false);
+        btn_Excluir.setVisible(false);
         try {
             modeloConcluidas = new TarefaTableModel(Status.CONCLUIDO);
             tabelaTarefas.setModel(modeloConcluidas);
+
             tabelaTarefas.updateUI();
+            tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
         } catch (SQLException ex) {
             Logger.getLogger(ListarTarefas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -140,10 +212,15 @@ public class ListarTarefas extends javax.swing.JFrame {
     }//GEN-LAST:event_tarefasConcluidasActionPerformed
 
     private void tarefasDisponiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tarefasDisponiveisActionPerformed
+        btn_Inserir.setVisible(false);
+        btn_Editar.setVisible(false);
+        btn_Excluir.setVisible(false);
         try {
             modeloDisponiveis = new TarefaTableModel(Status.DISPONIVEL);
             tabelaTarefas.setModel(modeloDisponiveis);
+
             tabelaTarefas.updateUI();
+            tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
         } catch (SQLException ex) {
             Logger.getLogger(ListarTarefas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -152,25 +229,26 @@ public class ListarTarefas extends javax.swing.JFrame {
     }//GEN-LAST:event_tarefasDisponiveisActionPerformed
 
     private void todasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todasActionPerformed
-        try {
-            modeloTodas = new TarefaTableModel();
-            tabelaTarefas.setModel(modeloTodas);
-            tabelaTarefas.updateUI();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ListarTarefas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ListarTarefas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        btn_Inserir.setVisible(true);
+        btn_Editar.setVisible(true);
+        btn_Excluir.setVisible(true);
+        tabelaTarefas.setModel(modeloTodas);
 
+        tabelaTarefas.updateUI();
+        tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
     }//GEN-LAST:event_todasActionPerformed
 
     private void emAndamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emAndamentoActionPerformed
+        btn_Inserir.setVisible(false);
+        btn_Editar.setVisible(false);
+        btn_Excluir.setVisible(false);
         try {
             modeloEmAndamento = new TarefaTableModel(Status.ANDAMENTO);
             tabelaTarefas.setModel(modeloEmAndamento);
+
             tabelaTarefas.updateUI();
-            
+            tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
+
         } catch (SQLException ex) {
             Logger.getLogger(ListarTarefas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -180,11 +258,16 @@ public class ListarTarefas extends javax.swing.JFrame {
     }//GEN-LAST:event_emAndamentoActionPerformed
 
     private void bloqueadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloqueadasActionPerformed
+        btn_Inserir.setVisible(false);
+        btn_Editar.setVisible(false);
+        btn_Excluir.setVisible(false);
         try {
             modeloBloqueadas = new TarefaTableModel(Status.BLOQUEADO);
             tabelaTarefas.setModel(modeloBloqueadas);
+
             tabelaTarefas.updateUI();
-            
+            tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
+
         } catch (SQLException ex) {
             Logger.getLogger(ListarTarefas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -192,9 +275,73 @@ public class ListarTarefas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bloqueadasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btn_InserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_InserirActionPerformed
+        inserir.solicitaInsercao();
+        inserir.setVisible(true);
+        inserir.setLocationRelativeTo(this);
+    }//GEN-LAST:event_btn_InserirActionPerformed
+
+    private void btn_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditarActionPerformed
+        int linhaSelecionada = tabelaTarefas.getSelectedRow();
+        if (linhaSelecionada >= 0) {
+            Tarefa tarefa = ((TarefaTableModel) modeloTodas).getRow(tabelaTarefas.getSelectedRow());
+            AlterarTarefa alterar = new AlterarTarefa(this, tarefa);
+            alterar.setVisible(true);
+            alterar.setLocationRelativeTo(this);
+        } else {
+            JOptionPane.showMessageDialog(null, "É necessário selecionar uma tarefa.");
+        }
+    }//GEN-LAST:event_btn_EditarActionPerformed
+
+    private void btn_ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExcluirActionPerformed
+        int linhaSelecionada = tabelaTarefas.getSelectedRow();
+        if (linhaSelecionada >= 0) {
+            Tarefa tarefa = ((TarefaTableModel) modeloTodas).getRow(linhaSelecionada);
+            try {
+                TarefaTableModel modelo = new TarefaTableModel();
+                modelo.removeRow(tarefa);
+                tabelaTarefas.setModel(modelo);
+                tabelaTarefas.updateUI();
+
+                tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Não é possível excluir a tarefa");
+                System.out.println(ex.getMessage());
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "É necessário selecionar uma tarefa.");
+        }
+    }//GEN-LAST:event_btn_ExcluirActionPerformed
+
+    public void InserirTarefa(Tarefa tarefa) {
+        try {
+            TarefaTableModel modelo = new TarefaTableModel();
+            modelo.addRow(tarefa);
+            tabelaTarefas.setModel(modelo);
+
+            tabelaTarefas.updateUI();
+            tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
+        } catch (SQLException ex) {
+            Mensagem.erroAcesso(inserir, "Erro ao conectar ao banco");
+        }
+        inserir.setVisible(false);
+    }
+
+    public void AlterarTarefa(AlterarTarefa alterar, Tarefa tarefa) {
+        try {
+            TarefaTableModel modelo = new TarefaTableModel();
+            modelo.editRow(tarefa);
+            tabelaTarefas.setModel(modelo);
+
+            tabelaTarefas.updateUI();
+            tabelaTarefas.setDefaultRenderer(Object.class, new TableRenderer());
+        } catch (SQLException ex) {
+            Mensagem.erroAcesso(alterar, "Erro ao conectar ao banco");
+        }
+        alterar.setVisible(false);
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -229,7 +376,11 @@ public class ListarTarefas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bloqueadas;
+    private javax.swing.JButton btn_Editar;
+    private javax.swing.JButton btn_Excluir;
+    private javax.swing.JButton btn_Inserir;
     private javax.swing.JButton emAndamento;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaTarefas;
     private javax.swing.JButton tarefasConcluidas;

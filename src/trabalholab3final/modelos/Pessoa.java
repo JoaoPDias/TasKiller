@@ -74,4 +74,9 @@ public class Pessoa {
         this.tarefas = tarefas;
     }
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+    
 }

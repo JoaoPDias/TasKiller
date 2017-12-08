@@ -26,7 +26,7 @@ public class RequisitoDAO {
     private String sqlVerificaRequisito = "SELECT fk_tarefa FROM requisito WHERE fk_tarefa = ? AND concluido is null";
     private String sqlConcluiRequisito = "UPDATE requisito SET concluido = TRUE WHERE fk_tarefa_requisito = ?";
     private String sqlListarRequisito = "SELECT fk_tarefa_requisito FROM requisito WHERE fk_tarefa = ?";
-    private String sqlListarRequisitados = "SELECT fk_tarefa FROM requisito WHERE fk_tarefa_requisito = ? AND concluido = TRUE";
+    private String sqlListarRequisitados = "SELECT fk_tarefa FROM requisito WHERE fk_tarefa_requisito = ?";
     private TarefaDAO tarefaDao;
 
     public RequisitoDAO(TarefaDAO tarefaDAO) throws SQLException, ClassNotFoundException {

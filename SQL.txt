@@ -48,7 +48,7 @@ CREATE TABLE  requisito (
   CONSTRAINT tarefa
     FOREIGN KEY (fk_tarefa)
     REFERENCES tarefa (idtarefa)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
 CREATE TABLE  tarefa_pessoa (
@@ -58,10 +58,10 @@ CREATE TABLE  tarefa_pessoa (
   CONSTRAINT fk_tarefa
     FOREIGN KEY (fk_tarefa)
     REFERENCES tarefa (idtarefa)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT fk_pessoa
     FOREIGN KEY (fk_pessoa)
     REFERENCES pessoa (idpessoa)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION);

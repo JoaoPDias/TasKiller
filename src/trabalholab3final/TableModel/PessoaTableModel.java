@@ -1,4 +1,3 @@
-
 package trabalholab3final.TableModel;
 
 import java.sql.SQLException;
@@ -9,15 +8,14 @@ import javax.swing.table.AbstractTableModel;
 import trabalholab3final.modelos.Pessoa;
 import trabalholab3final.dao.PessoaDAO;
 
-
 public class PessoaTableModel extends AbstractTableModel {
 
     private List<Pessoa> pessoas;
     private PessoaDAO pessoaDAO;
 
     public PessoaTableModel() throws SQLException, ClassNotFoundException {
-            this.pessoaDAO= new PessoaDAO();
-            this.pessoas = pessoaDAO.listarTodos();       
+        this.pessoaDAO = new PessoaDAO();
+        this.pessoas = pessoaDAO.listarTodos();
     }
 
     @Override
@@ -58,26 +56,26 @@ public class PessoaTableModel extends AbstractTableModel {
                 throw new IndexOutOfBoundsException();
         }
     }
-    
-    public void addRow(Pessoa p) throws SQLException{
+
+    public void addRow(Pessoa p) throws SQLException {
         pessoaDAO.inserir(p);
-		this.pessoas = pessoaDAO.listarTodos();
+        this.pessoas = pessoaDAO.listarTodos();
         this.fireTableDataChanged();
     }
-	
-	public void editRow(Pessoa p) throws SQLException{
+
+    public void editRow(Pessoa p) throws SQLException {
         pessoaDAO.alterar(p);
-		this.pessoas = pessoaDAO.listarTodos();
+        this.pessoas = pessoaDAO.listarTodos();
         this.fireTableDataChanged();
     }
-	
-    public void removeRow(Pessoa p) throws SQLException{
+
+    public void removeRow(Pessoa p) throws SQLException {
         pessoaDAO.excluir(p.getId());
-		this.pessoas = pessoaDAO.listarTodos();
+        this.pessoas = pessoaDAO.listarTodos();
         this.fireTableDataChanged();
     }
-    
-    public Pessoa getRow(Integer id){
+
+    public Pessoa getRow(Integer id) {
         return pessoas.get(id);
     }
 

@@ -37,25 +37,24 @@ public class InserirProjeto extends JFrame {
     public void criaJanela() {
         btSalvar = new JButton("Salvar");
         btLimpar = new JButton("Limpar");
-        lbNome = new JLabel("         Nome.:   ");
+        lbNome = new JLabel("Nome.:   ");
 
         txNome = new JTextField(10);
-
+        txNome.setSize(60, 60);
         painelFundo = new JPanel();
-        painelFundo.setLayout(new GridLayout(4, 2, 2, 4));
+        painelFundo.setLayout(new GridLayout(4, 2));
         painelFundo.add(lbNome);
         painelFundo.add(txNome);
-
+        btSalvar.setSize(60,60);
         painelFundo.add(btLimpar);
         painelFundo.add(btSalvar);
 
         getContentPane().add(painelFundo);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
         setSize(300, 150);
         setVisible(true);
         btSalvar.addActionListener(new BtSalvarListener());
         btLimpar.addActionListener(new BtLimparListener());
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     private class BtSalvarListener implements ActionListener {

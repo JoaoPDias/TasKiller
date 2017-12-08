@@ -17,7 +17,7 @@ import trabalholab3final.modelos.Pessoa;
 public class ListarPessoas extends javax.swing.JFrame {
 
     private PessoaTableModel modeloPessoa;
-    private PessoaDAO dao;
+    private AlterarPessoa JanelaAlterar;
 
     public ListarPessoas() throws SQLException, ClassNotFoundException {
         super("Pessoas");
@@ -25,6 +25,7 @@ public class ListarPessoas extends javax.swing.JFrame {
         modeloPessoa = new PessoaTableModel();
         tabelaPessoas.setModel(modeloPessoa);
         tabelaPessoas.updateUI();
+        
 
     }
 
@@ -42,8 +43,6 @@ public class ListarPessoas extends javax.swing.JFrame {
         btnInserir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tabelaPessoas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,15 +111,21 @@ public class ListarPessoas extends javax.swing.JFrame {
         modeloPessoa.addRow(pessoa);
     }
 
+    public void editarPessoas(Pessoa pessoa) throws SQLException {
+        modeloPessoa.editRow(pessoa);
+    }
+
+
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         InserirPessoa ip = new InserirPessoa(this);
         ip.setVisible(true);
+        ip.setLocationRelativeTo(this);
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         try {
-            Integer id = modeloPessoa.getRow(tabelaPessoas.getSelectedRow()).getId();
-            dao.excluir(id);
+            Pessoa p = modeloPessoa.getRow(tabelaPessoas.getSelectedRow());
+            modeloPessoa.removeRow(p);
             tabelaPessoas.updateUI();
         } catch (SQLException ex) {
             Logger.getLogger(ListarPessoas.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,7 +134,10 @@ public class ListarPessoas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        
+            Pessoa p = modeloPessoa.getRow(tabelaPessoas.getSelectedRow());
+            JanelaAlterar = new AlterarPessoa(this, p);
+            JanelaAlterar.setVisible(true);
+            JanelaAlterar.setLocationRelativeTo(this);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**

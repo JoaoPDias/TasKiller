@@ -82,10 +82,9 @@ public class DashBoard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new Dimension(500, 500));
-        setMinimumSize(new Dimension(500, 500));
+        setSize(new Dimension(900, 500));
         setResizable(false);
-
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         lstProjetos.setBackground(Color.black);
         lstProjetos.setForeground(Color.WHITE);
         lstProjetos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

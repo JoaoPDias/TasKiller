@@ -24,6 +24,7 @@ public class AlterarPessoa extends javax.swing.JFrame {
         this.pessoa = pessoa;
         this.campoNome.setText(pessoa.getNome());
         this.campoEmail.setText(pessoa.getEmail());
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         
     }
 

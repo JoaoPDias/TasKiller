@@ -9,8 +9,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import trabalholab3final.Connection.ConexaoJavaDB;
 import trabalholab3final.modelos.Pessoa;
 import trabalholab3final.modelos.Projeto;
@@ -22,7 +20,7 @@ public class TarefaDAO {
     Connection conexao;
     private String sqlInserir = "INSERT INTO TAREFA(fk_projeto,descricao,duracao,valorpercentual,datainicio,dataconclusao,status) VALUES (?,?,?,?,?,?,?)";
     private String sqlAlterar = "UPDATE TAREFA SET fk_projeto = ?, descricao = ?, duracao = ?, valorpercentual = ?, datainicio = ?, dataconclusao = ?, status = ? WHERE idtarefa = ?";
-    private String sqlExcluir = "DELETE FROM PROJETO WHERE idtarefa = ?";
+    private String sqlExcluir = "DELETE FROM TAREFA WHERE idtarefa = ?";
     private String sqlListar = "SELECT * FROM TAREFA WHERE idtarefa = ?";
     private String sqlListarProjeto = "SELECT * FROM TAREFA WHERE fk_projeto = ?";
     private String sqlAlterarStatus = "UPDATE TAREFA SET STATUS = ? WHERE idtarefa = ?";
@@ -81,10 +79,6 @@ public class TarefaDAO {
         operacao.setDate(6, Date.valueOf(tarefa.getDataConclusao()));
         operacao.setString(7, tarefa.getStatus().toString());
         operacao.setInt(8, tarefa.getId());
-        tarefapessoaDAO.excluirColaborador(tarefa);
-        if (tarefa.getColaboradores() != null && tarefa.getColaboradores().size() > 0) {
-            tarefapessoaDAO.inserirColaborador(tarefa, tarefa.getColaboradores());
-        }
         if (tarefa.getStatus() == Status.CONCLUIDO) {
             requisitoDAO.concluiRequisito(tarefa.getId());
             this.alterarStatus(requisitoDAO.ListarRequisitados(tarefa.getId()));
@@ -134,6 +128,7 @@ public class TarefaDAO {
             if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
+            tarefa.setRequisitos(requisitos);
         }
 
         operacao.close();
@@ -162,13 +157,15 @@ public class TarefaDAO {
             if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
+            tarefa.setRequisitos(requisitos);
             tarefas.add(tarefa);
 
         }
         return tarefas;
 
     }
-public List<Tarefa> listarApenasStatus(Status status) throws SQLException {
+
+    public List<Tarefa> listarApenasStatus(Status status) throws SQLException {
         PreparedStatement operacao = conexao.prepareStatement(sqlListarApenasStatus);
         operacao.setString(1, status.toString());
         operacao.execute();
@@ -189,11 +186,13 @@ public List<Tarefa> listarApenasStatus(Status status) throws SQLException {
             if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
+            tarefa.setRequisitos(requisitos);
             tarefas.add(tarefa);
         }
         return tarefas;
 
     }
+
     public List<Tarefa> listarPorStatus(Status status, Projeto projeto) throws SQLException {
         PreparedStatement operacao = conexao.prepareStatement(sqlListarStatus);
         operacao.setString(1, status.toString());
@@ -215,6 +214,7 @@ public List<Tarefa> listarApenasStatus(Status status) throws SQLException {
             if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
+            tarefa.setRequisitos(requisitos);
             tarefas.add(tarefa);
         }
         return tarefas;
@@ -241,6 +241,7 @@ public List<Tarefa> listarApenasStatus(Status status) throws SQLException {
             if (requisitoDAO.naoHaRequisitos(id)) {
                 requisitos.addAll(requisitoDAO.ListarTarefas(tarefa));
             }
+            tarefa.setRequisitos(requisitos);
             tarefas.add(tarefa);
         }
         return tarefas;
@@ -248,8 +249,8 @@ public List<Tarefa> listarApenasStatus(Status status) throws SQLException {
     }
 
     //public static void main(String[] args) {
-        //try {
-            /* Projeto p = new Projeto("Projeto J");
+    //try {
+    /* Projeto p = new Projeto("Projeto J");
             
             pdao.inserir(p);
             List<Tarefa> tarefas = new ArrayList<>();
@@ -273,21 +274,20 @@ public List<Tarefa> listarApenasStatus(Status status) throws SQLException {
             tarefas.add(t2);
             Tarefa t3 = new Tarefa(p, "Tarefa 3", 180, 10.0, LocalDate.now(), LocalDate.now().plusDays(180), "DISPONIVEL", tarefas, pessoas);
             tarefadao.inserir(t3);*/
-         //   ProjetoDAO pdao = new ProjetoDAO();
-         //   TarefaDAO tarefadao = new TarefaDAO(pdao);
-         //   Tarefa t1 = tarefadao.listar(4);
-         //   System.out.println(t1.getStatus().toString());
-         //   Tarefa t2 = tarefadao.listar(5);
-         //   System.out.println(t2.getStatus().toString());
-         //   Tarefa t3 = tarefadao.listar(6);
-         //   System.out.println(t3.getStatus().toString());
-         //   t3.setStatus(Status.ANDAMENTO.toString());
-         //   tarefadao.alterar(t3);
-       // } catch (SQLException ex) {
-          //  Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        //} catch (ClassNotFoundException ex) {
-        //   Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        //}
+    //   ProjetoDAO pdao = new ProjetoDAO();
+    //   TarefaDAO tarefadao = new TarefaDAO(pdao);
+    //   Tarefa t1 = tarefadao.listar(4);
+    //   System.out.println(t1.getStatus().toString());
+    //   Tarefa t2 = tarefadao.listar(5);
+    //   System.out.println(t2.getStatus().toString());
+    //   Tarefa t3 = tarefadao.listar(6);
+    //   System.out.println(t3.getStatus().toString());
+    //   t3.setStatus(Status.ANDAMENTO.toString());
+    //   tarefadao.alterar(t3);
+    // } catch (SQLException ex) {
+    //  Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
+    //} catch (ClassNotFoundException ex) {
+    //   Logger.getLogger(TarefaDAO.class.getName()).log(Level.SEVERE, null, ex);
     //}
-
+    //}
 }
