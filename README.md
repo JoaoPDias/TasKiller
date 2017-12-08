@@ -51,7 +51,7 @@ Um projeto possui N tarefas, sendo assim, cada registro da tarefa possuirá o ca
 ## Modelo de Classes
 
 Para modelar as classes bases do sistema foram criadas 3 classes. Projeto, Tarefa e Pessoa.
-A Classe Projeto, além do seu id, nome e e-mail apresenta uma coleção de tarefas para facilitar o acesso aos dados do projeto no DashBoard, assim como na classe Tarefa há uma coleção de Requisitos, no caso da classe Tarefa e de Colaboradores, no caso pessoas. Para ser demonstrado os requisitos existentes para poder desbloquear a tarefa e oss colaboradores cadastrados presentes na tarefa. A classe Pessoa possui os dados da pessoa e a lista de tarefas designadas à pessoa, Podendo assim facilitar a implementação futura de um sistema de login e separação por usuário do DashBoard. A nível de projeto foram adicionadas classes DAO para acessar o banco de dados e gravar o objeto.
+A Classe Projeto, além do seu id, nome e e-mail apresenta uma coleção de tarefas para facilitar o acesso aos dados do projeto no DashBoard, assim como na classe Tarefa há uma coleção de Requisitos, no caso da classe Tarefa e de Colaboradores, no caso pessoas. Para ser demonstrado os requisitos existentes para poder desbloquear a tarefa e oss colaboradores cadastrados presentes na tarefa. A classe Pessoa possui os dados da pessoa e a lista de tarefas designadas à pessoa, Podendo assim facilitar a implementação futura de um sistema de login e separação por usuário do DashBoard. A nível de projeto foram adicionadas classes DAO para acessar o banco de dados e gravar o objeto. O modelo das entidades base do sistema está disponível _na raíz do Projeto e no link_: [https://1drv.ms/i/s!AoXjPyyJW_sygYsnm8OTOWT6J8BcQg]
 
 
 ## Pontos onde podem ser realizadas melhorias futuras
