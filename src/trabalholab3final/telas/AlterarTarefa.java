@@ -34,7 +34,7 @@ public class AlterarTarefa extends javax.swing.JFrame {
         dataInicio.setText(tarefa.getDataInicio().format(formatter));
         dataFinal.setText(tarefa.getDataConclusao().format(formatter));
         txtPorcentagem.setText(tarefa.getValorConclusao().toString());
-        if (tarefa.getStatus() == Status.BLOQUEADO) {
+        if (tarefa.getStatus() == Status.BLOQUEADO || tarefa.getStatus() == Status.CONCLUIDO) {
             statusCombo.setEnabled(false);
         }
         statusCombo.setSelectedItem(tarefa.getStatus());
