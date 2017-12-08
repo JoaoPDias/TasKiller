@@ -53,7 +53,7 @@ CREATE TABLE  tarefa_pessoa (
   CONSTRAINT fk_tarefa
     FOREIGN KEY (fk_tarefa)
     REFERENCES tarefa (idtarefa)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_pessoa
     FOREIGN KEY (fk_pessoa)
